@@ -1,9 +1,10 @@
 package util
 
 import (
-	"errors"
 	"strings"
 	"time"
+
+	myError "homePage/backend/my_error"
 
 	"github.com/golang-jwt/jwt/v4"
 )
@@ -12,7 +13,7 @@ var jwtSecret = []byte("little_lion")
 
 type User struct {
 	Username string `form:"username" json:"username" binding:"required"`
-	UserId   string `form:"userId" json:"userId" binding:"required"`
+	UserId   uint   `form:"userId" json:"userId" binding:"required"`
 }
 
 type UserClaims struct {
@@ -22,7 +23,7 @@ type UserClaims struct {
 
 func GenerateJWT(user User) (string, error) {
 	nowTime := time.Now()
-	expireTime := nowTime.Add(3 * time.Hour)
+	expireTime := nowTime.Add(24 * time.Hour)
 
 	claims := UserClaims{
 		user,
@@ -60,26 +61,17 @@ func IsJwtValid(JWT string) (bool, error) {
 	// 判断是否解析成功
 	if err != nil || tokenClaims == nil {
 		return false, err
-	}
-
-	claims, ok := tokenClaims.Claims.(*UserClaims)
-
-	// 是否断言成功
-	if !ok {
-		return false, errors.New("claims trans failed")
-	}
-	// 是否合法
-	if !tokenClaims.Valid {
-		return false, errors.New("tokenClaims is invalid")
-	}
-	// 是否超时
-	if time.Now().Unix() > claims.ExpiresAt {
-		return false, errors.New("jwt expire time limit")
+	} else if claims, ok := tokenClaims.Claims.(*UserClaims); !ok {
+		return false, myError.ClaimsTransFailed
+	} else if !tokenClaims.Valid {
+		return false, myError.TokenClaimsIsInvalid
+	} else if time.Now().Unix() > claims.ExpiresAt {
+		return false, myError.JwtExpireTime
 	}
 	return true, nil
 }
 
-func SplitJwt(token string) string {
+func GetBearerToken(token string) string {
 	slic := strings.Split(token, " ")
 	if len(slic) != 2 {
 		return ""

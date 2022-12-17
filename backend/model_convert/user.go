@@ -1,0 +1,36 @@
+package modelConvert
+
+import (
+	databaseModel "homePage/backend/database/database_model"
+	viewModel "homePage/backend/handler/view_model"
+)
+
+func ViewModel2DatabaseModelUser(user *viewModel.UserView) *databaseModel.User {
+	return &databaseModel.User{
+		ID:       user.ID,
+		Name:     user.Name,
+		Password: user.Password,
+		RoleId:   int32(databaseModel.Role2RoleId[user.Role]),
+		Extra:    user.Extra,
+	}
+}
+
+func DatabaseModel2ViewModelUser(user *databaseModel.User) *viewModel.UserView {
+	return &viewModel.UserView{
+		ID:    user.ID,
+		Name:  user.Name,
+		Role:  string(databaseModel.RoleId2Role[user.RoleId]),
+		Extra: user.Extra,
+	}
+}
+
+func DatabaseModel2ViewModelUserList(user []*databaseModel.User) []*viewModel.UserView {
+	result := make([]*viewModel.UserView, 0)
+	if user == nil {
+		return result
+	}
+	for _, v := range user {
+		result = append(result, DatabaseModel2ViewModelUser(v))
+	}
+	return result
+}

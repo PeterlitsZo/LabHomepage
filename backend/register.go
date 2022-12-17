@@ -1,20 +1,18 @@
 package main
 
 import (
-	"homePage/backend/handler"
+	resourceHandler "homePage/backend/handler/resource_handler"
 
 	"github.com/gin-gonic/gin"
 )
 
 func register(r *gin.Engine) {
-	handler.InitHandler()
-	for _, handler := range handler.ApiHandlerImplMap {
+	for _, val := range resourceHandler.Handlers {
+		handler := val.(resourceHandler.Handler)
 		handler.Get(r)
 		handler.List(r)
 		handler.Create(r)
 		handler.Delete(r)
 		handler.Update(r)
 	}
-	r.POST("api/v1/token", handler.NewLoginHandler())
-	r.POST("api/v1/register", handler.NewRegisterHandler())
 }
