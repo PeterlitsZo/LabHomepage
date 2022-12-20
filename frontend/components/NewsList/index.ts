@@ -1,0 +1,1 @@
+export { NewsList as default } from './newsList';

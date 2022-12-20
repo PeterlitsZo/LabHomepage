@@ -1,0 +1,20 @@
+.pInCard {
+  position: relative;
+  line-height: 1.2;
+  height: calc(3em * 1.2);
+  overflow: hidden;
+
+  &::after {
+    background: white;
+    content: "";
+    display: block;
+    height: calc(1em * 1.2);
+    -webkit-mask-image: linear-gradient(90deg,transparent,#000 75%);
+    mask-image: linear-gradient(90deg,transparent,#000 75%);
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 20ch;
+  }
+}

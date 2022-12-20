@@ -26,6 +26,13 @@ services:
       - "DB_PASSWORD=123456"
       - "DB_HOST=mysql:3306"
       - "DB_NAME=homePage"
-    ports:
-      - 8080:8080
     command: "/usr/local/bin/backend"
+  frontend:
+    build: ./frontend
+  caddy:
+    image: caddy
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./caddy:/data
+    ports:
+      - 80:80

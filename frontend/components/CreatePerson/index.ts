@@ -1,0 +1,1 @@
+export { CreatePerson as default } from './createPerson';
