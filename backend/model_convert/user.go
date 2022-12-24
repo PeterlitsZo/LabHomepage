@@ -3,13 +3,15 @@ package modelConvert
 import (
 	databaseModel "homePage/backend/database/database_model"
 	viewModel "homePage/backend/handler/view_model"
+	"homePage/backend/util"
 )
 
 func ViewModel2DatabaseModelUser(user *viewModel.UserView) *databaseModel.User {
+	password, _ := util.HashPassword(user.Password)
 	return &databaseModel.User{
 		ID:       user.ID,
 		Name:     user.Name,
-		Password: user.Password,
+		Password: password,
 		RoleId:   int32(databaseModel.Role2RoleId[user.Role]),
 		Extra:    user.Extra,
 	}

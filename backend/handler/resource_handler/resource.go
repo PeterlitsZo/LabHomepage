@@ -9,9 +9,7 @@ import (
 	modelConvert "homePage/backend/model_convert"
 	"homePage/backend/util"
 	"net/http"
-	"os"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,22 +23,25 @@ func (h *ResourceHandler) Get(r *gin.Engine) error {
 	}
 	handler := func(g *gin.Context) {
 		if id, err := util.String2Uint(g.Param("id")); err != nil {
-			g.JSON(http.StatusBadRequest, err)
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": err.Error(),
+			})
 			return
 		} else if id == 0 {
-			g.JSON(http.StatusBadRequest, handlerError.ResourceNotExist)
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": handlerError.ResourceNotExist.Error(),
+			})
 			return
 		} else if dbResource, err := databaseBusiness.GetResourceByID(id); err != nil {
-			g.JSON(http.StatusInternalServerError, err)
+			g.JSON(http.StatusInternalServerError, gin.H{
+				"message": err.Error(),
+			})
 			return
 		} else {
 			ret := modelConvert.DatabaseModel2ViewModelResource(dbResource)
 			g.JSON(http.StatusOK, ret)
 			return
 		}
-	}
-	if os.Getenv("RUN_MODE") == "dev" {
-		handlers = append(handlers, cors.Default())
 	}
 	handlers = append(handlers, handler)
 	r.GET(h.router+"/:id", handlers...)
@@ -56,7 +57,9 @@ func (h *ResourceHandler) List(r *gin.Engine) error {
 			Resource []*viewModel.ResourceView `json:"resource"`
 		}
 		if resource, err := databaseBusiness.ListResource(); err != nil {
-			g.JSON(http.StatusInternalServerError, err)
+			g.JSON(http.StatusInternalServerError, gin.H{
+				"message": err.Error(),
+			})
 			return
 		} else {
 			g.JSON(http.StatusOK, Resource{
@@ -64,9 +67,6 @@ func (h *ResourceHandler) List(r *gin.Engine) error {
 			})
 			return
 		}
-	}
-	if os.Getenv("RUN_MODE") == "dev" {
-		handlers = append(handlers, cors.Default())
 	}
 	handlers = append(handlers, handler)
 	r.GET(h.router, handlers...)
@@ -80,24 +80,29 @@ func (h *ResourceHandler) Update(r *gin.Engine) error {
 	handler := func(g *gin.Context) {
 		var resource viewModel.ResourceView
 		if err := g.ShouldBind(&resource); err != nil {
-			g.JSON(http.StatusBadRequest, err)
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": err.Error(),
+			})
 			return
 		} else if len(resource.Title) == 0 {
-			g.JSON(http.StatusBadRequest, handlerError.ResourceTitleEmpty)
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": handlerError.ResourceTitleEmpty.Error(),
+			})
 			return
 		} else if id, err := util.String2Uint(g.Param("id")); err != nil {
-			g.JSON(http.StatusBadRequest, handlerError.ResourceNotExist)
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": handlerError.ResourceNotExist.Error(),
+			})
 			return
 		} else if err = databaseBusiness.UpdateResourceByID(id, modelConvert.ViewModel2DatabaseModelResource(&resource)); err != nil {
-			g.JSON(http.StatusInternalServerError, err)
+			g.JSON(http.StatusInternalServerError, gin.H{
+				"message": err.Error(),
+			})
 			return
 		} else {
 			g.JSON(http.StatusOK, nil)
 			return
 		}
-	}
-	if os.Getenv("RUN_MODE") == "dev" {
-		handlers = append(handlers, cors.Default())
 	}
 	handlers = append(handlers, handler)
 	r.PUT(h.router+"/:id", handlers...)
@@ -111,29 +116,36 @@ func (h *ResourceHandler) Create(r *gin.Engine) error {
 	handler := func(g *gin.Context) {
 		var resource viewModel.ResourceView
 		if err := g.ShouldBind(&resource); err != nil {
-			g.JSON(http.StatusBadRequest, err)
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": err.Error(),
+			})
 			return
 		} else if len(resource.Title) == 0 {
-			g.JSON(http.StatusBadRequest, handlerError.ResourceTitleEmpty)
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": handlerError.ResourceTitleEmpty.Error(),
+			})
 			return
 		} else if ret, err := databaseBusiness.GetResourceByTitle(resource.Title); ret == nil || err != nil {
 			if err != nil {
-				g.JSON(http.StatusInternalServerError, err)
+				g.JSON(http.StatusInternalServerError, gin.H{
+					"message": err.Error(),
+				})
 				return
 			} else if ret == nil {
-				g.JSON(http.StatusBadRequest, handlerError.ResourceNotExist)
+				g.JSON(http.StatusBadRequest, gin.H{
+					"message": handlerError.ResourceNotExist.Error(),
+				})
 				return
 			}
 		} else if err = databaseBusiness.CreateResource(modelConvert.ViewModel2DatabaseModelResource(&resource)); err != nil {
-			g.JSON(http.StatusInternalServerError, err)
+			g.JSON(http.StatusInternalServerError, gin.H{
+				"message": err.Error(),
+			})
 			return
 		} else {
 			g.JSON(http.StatusOK, nil)
 			return
 		}
-	}
-	if os.Getenv("RUN_MODE") == "dev" {
-		handlers = append(handlers, cors.Default())
 	}
 	handlers = append(handlers, handler)
 	r.POST(h.router, handlers...)
@@ -149,29 +161,36 @@ func (h *ResourceHandler) Delete(r *gin.Engine) error {
 	}
 	handler := func(g *gin.Context) {
 		if id, err := util.String2Uint(g.Param("id")); err != nil {
-			g.JSON(http.StatusBadRequest, err)
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": err.Error(),
+			})
 			return
 		} else if id == 0 {
-			g.JSON(http.StatusBadRequest, handlerError.ResourceNotExist)
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": handlerError.ResourceNotExist.Error(),
+			})
 			return
 		} else if resource, err := databaseBusiness.GetResourceByID(id); err != nil || resource == nil {
 			if err != nil {
-				g.JSON(http.StatusInternalServerError, err)
+				g.JSON(http.StatusInternalServerError, gin.H{
+					"message": err.Error(),
+				})
 				return
 			} else if resource == nil {
-				g.JSON(http.StatusBadRequest, handlerError.ResourceNotExist)
+				g.JSON(http.StatusBadRequest, gin.H{
+					"message": handlerError.ResourceNotExist.Error(),
+				})
 				return
 			}
 		} else if err = databaseBusiness.DeleteResourceByID(id); err != nil {
-			g.JSON(http.StatusInternalServerError, err)
+			g.JSON(http.StatusInternalServerError, gin.H{
+				"message": err.Error(),
+			})
 			return
 		} else {
 			g.JSON(http.StatusOK, nil)
 			return
 		}
-	}
-	if os.Getenv("RUN_MODE") == "dev" {
-		handlers = append(handlers, cors.Default())
 	}
 	handlers = append(handlers, handler)
 	r.DELETE(h.router+"/:id", handlers...)

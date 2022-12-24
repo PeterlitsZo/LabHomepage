@@ -6,9 +6,7 @@ import (
 	viewModel "homePage/backend/handler/view_model"
 	"homePage/backend/util"
 	"net/http"
-	"os"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -35,32 +33,44 @@ func (h *TokenHandler) Create(r *gin.Engine) error {
 	handler := func(g *gin.Context) {
 		var user viewModel.UserView
 		if err := g.ShouldBind(&user); err != nil {
-			g.JSON(http.StatusBadRequest, err)
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": err.Error(),
+			})
 			return
 		} else if len(user.Name) == 0 {
-			g.JSON(http.StatusBadRequest, handlerError.UserNameEmpty)
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": handlerError.UserNameEmpty.Error(),
+			})
 			return
 		} else if ret, err := databaseBusiness.GetUserByName(user.Name); ret == nil || err != nil {
 			if err != nil {
-				g.JSON(http.StatusInternalServerError, err)
+				g.JSON(http.StatusInternalServerError, gin.H{
+					"message": err.Error(),
+				})
 				return
 			} else if ret == nil {
-				g.JSON(http.StatusBadRequest, handlerError.UserNotExist)
+				g.JSON(http.StatusBadRequest, gin.H{
+					"message": handlerError.UserNotExist.Error(),
+				})
+				return
+			} else if !util.CheckPasswordHash(user.Password, ret.Password) {
+				g.JSON(http.StatusBadRequest, gin.H{
+					"message": handlerError.PasswordNotCorrect.Error(),
+				})
 				return
 			}
 		} else if jwt, err := util.GenerateJWT(util.User{
 			Username: ret.Name,
 			UserId:   ret.ID,
 		}); err != nil {
-			g.JSON(http.StatusInternalServerError, err)
+			g.JSON(http.StatusInternalServerError, gin.H{
+				"message": err.Error(),
+			})
 			return
 		} else {
 			g.JSON(http.StatusOK, "Bearer "+jwt)
 			return
 		}
-	}
-	if os.Getenv("RUN_MODE") == "dev" {
-		handlers = append(handlers, cors.Default())
 	}
 	handlers = append(handlers, handler)
 	r.POST(h.router, handlers...)

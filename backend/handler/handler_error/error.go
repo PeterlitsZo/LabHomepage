@@ -20,6 +20,7 @@ var (
 	ResourceAlreadtExist error = errors.New("Resource Already exist")
 	ResourceTitleEmpty   error = errors.New("Resource title is empty")
 	UserNotExist         error = errors.New("User not exist")
+	PasswordNotCorrect   error = errors.New("Password not correct")
 	UserAlreadyExist     error = errors.New("User already exist")
 	UserNameEmpty        error = errors.New("User name is empty")
 	UserIdIsInvalid      error = errors.New("User id is invalid")

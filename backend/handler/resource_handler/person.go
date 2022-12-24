@@ -9,9 +9,7 @@ import (
 	modelConvert "homePage/backend/model_convert"
 	"homePage/backend/util"
 	"net/http"
-	"os"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,22 +23,25 @@ func (h *PersonHandler) Get(r *gin.Engine) error {
 	}
 	handler := func(g *gin.Context) {
 		if id, err := util.String2Uint(g.Param("id")); err != nil {
-			g.JSON(http.StatusBadRequest, err)
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": err.Error(),
+			})
 			return
 		} else if id == 0 {
-			g.JSON(http.StatusBadRequest, handlerError.PersonNotExist)
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": handlerError.PersonNotExist.Error(),
+			})
 			return
 		} else if dbPerson, err := databaseBusiness.GetPersonByID(id); err != nil {
-			g.JSON(http.StatusInternalServerError, err)
+			g.JSON(http.StatusInternalServerError, gin.H{
+				"message": err.Error(),
+			})
 			return
 		} else {
 			ret := modelConvert.DatabaseModel2ViewModelPerson(dbPerson)
 			g.JSON(http.StatusOK, ret)
 			return
 		}
-	}
-	if os.Getenv("RUN_MODE") == "dev" {
-		handlers = append(handlers, cors.Default())
 	}
 	handlers = append(handlers, handler)
 	r.GET(h.router+"/:id", handlers...)
@@ -56,7 +57,9 @@ func (h *PersonHandler) List(r *gin.Engine) error {
 			Person []*viewModel.PersonView `json:"person"`
 		}
 		if person, err := databaseBusiness.ListPerson(); err != nil {
-			g.JSON(http.StatusInternalServerError, err)
+			g.JSON(http.StatusInternalServerError, gin.H{
+				"message": err.Error(),
+			})
 			return
 		} else {
 			g.JSON(http.StatusOK, Person{
@@ -64,9 +67,6 @@ func (h *PersonHandler) List(r *gin.Engine) error {
 			})
 			return
 		}
-	}
-	if os.Getenv("RUN_MODE") == "dev" {
-		handlers = append(handlers, cors.Default())
 	}
 	handlers = append(handlers, handler)
 	r.GET(h.router, handlers...)
@@ -80,24 +80,29 @@ func (h *PersonHandler) Update(r *gin.Engine) error {
 	handler := func(g *gin.Context) {
 		var Person viewModel.PersonView
 		if err := g.ShouldBind(&Person); err != nil {
-			g.JSON(http.StatusBadRequest, err)
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": err.Error(),
+			})
 			return
 		} else if len(Person.Name) == 0 {
-			g.JSON(http.StatusBadRequest, handlerError.PersonNameEmpty)
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": handlerError.PersonNameEmpty.Error(),
+			})
 			return
 		} else if id, err := util.String2Uint(g.Param("id")); err != nil {
-			g.JSON(http.StatusBadRequest, handlerError.PersonNotExist)
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": handlerError.PersonNotExist.Error(),
+			})
 			return
 		} else if err = databaseBusiness.UpdatePersonByID(id, modelConvert.ViewModel2DatabaseModelPerson(&Person)); err != nil {
-			g.JSON(http.StatusInternalServerError, err)
+			g.JSON(http.StatusInternalServerError, gin.H{
+				"message": err.Error(),
+			})
 			return
 		} else {
 			g.JSON(http.StatusOK, nil)
 			return
 		}
-	}
-	if os.Getenv("RUN_MODE") == "dev" {
-		handlers = append(handlers, cors.Default())
 	}
 	handlers = append(handlers, handler)
 	r.PUT(h.router+"/:id", handlers...)
@@ -111,29 +116,36 @@ func (h *PersonHandler) Create(r *gin.Engine) error {
 	handler := func(g *gin.Context) {
 		var Person viewModel.PersonView
 		if err := g.ShouldBind(&Person); err != nil {
-			g.JSON(http.StatusBadRequest, err)
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": err.Error(),
+			})
 			return
 		} else if len(Person.Name) == 0 {
-			g.JSON(http.StatusBadRequest, handlerError.PersonNameEmpty)
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": handlerError.PersonNameEmpty.Error(),
+			})
 			return
 		} else if ret, err := databaseBusiness.GetPersonByName(Person.Name); ret != nil || err != nil {
 			if err != nil {
-				g.JSON(http.StatusInternalServerError, err)
+				g.JSON(http.StatusInternalServerError, gin.H{
+					"message": err.Error(),
+				})
 				return
 			} else if ret != nil {
-				g.JSON(http.StatusBadRequest, handlerError.PersonAlreadyExist)
+				g.JSON(http.StatusBadRequest, gin.H{
+					"message": handlerError.PersonAlreadyExist.Error(),
+				})
 				return
 			}
 		} else if err = databaseBusiness.CreatePerson(modelConvert.ViewModel2DatabaseModelPerson(&Person)); err != nil {
-			g.JSON(http.StatusInternalServerError, err)
+			g.JSON(http.StatusInternalServerError, gin.H{
+				"message": err.Error(),
+			})
 			return
 		} else {
 			g.JSON(http.StatusOK, nil)
 			return
 		}
-	}
-	if os.Getenv("RUN_MODE") == "dev" {
-		handlers = append(handlers, cors.Default())
 	}
 	handlers = append(handlers, handler)
 	r.POST(h.router, handlers...)
@@ -149,29 +161,36 @@ func (h *PersonHandler) Delete(r *gin.Engine) error {
 	}
 	handler := func(g *gin.Context) {
 		if id, err := util.String2Uint(g.Param("id")); err != nil {
-			g.JSON(http.StatusBadRequest, err)
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": err.Error(),
+			})
 			return
 		} else if id == 0 {
-			g.JSON(http.StatusBadRequest, handlerError.PersonNotExist)
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": handlerError.PersonNotExist.Error(),
+			})
 			return
 		} else if Person, err := databaseBusiness.GetPersonByID(id); err != nil || Person == nil {
 			if err != nil {
-				g.JSON(http.StatusInternalServerError, err)
+				g.JSON(http.StatusInternalServerError, gin.H{
+					"message": err.Error(),
+				})
 				return
 			} else if Person == nil {
-				g.JSON(http.StatusBadRequest, handlerError.PersonNotExist)
+				g.JSON(http.StatusBadRequest, gin.H{
+					"message": handlerError.PersonNotExist.Error(),
+				})
 				return
 			}
 		} else if err = databaseBusiness.DeletePersonByID(id); err != nil {
-			g.JSON(http.StatusInternalServerError, err)
+			g.JSON(http.StatusInternalServerError, gin.H{
+				"message": err.Error(),
+			})
 			return
 		} else {
 			g.JSON(http.StatusOK, nil)
 			return
 		}
-	}
-	if os.Getenv("RUN_MODE") == "dev" {
-		handlers = append(handlers, cors.Default())
 	}
 	handlers = append(handlers, handler)
 	r.DELETE(h.router+"/:id", handlers...)

@@ -10,6 +10,7 @@ func TestHashPassword(t *testing.T) {
 			t.Error(err)
 			return
 		}
-		t.Logf("\n%s", hash)
+		bol := CheckPasswordHash(password, hash)
+		t.Logf("\n%s %+v", hash, bol)
 	}
 }
