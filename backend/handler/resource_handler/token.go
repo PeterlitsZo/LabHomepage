@@ -6,7 +6,9 @@ import (
 	viewModel "homePage/backend/handler/view_model"
 	"homePage/backend/util"
 	"net/http"
+	"os"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -56,6 +58,9 @@ func (h *TokenHandler) Create(r *gin.Engine) error {
 			g.JSON(http.StatusOK, "Bearer "+jwt)
 			return
 		}
+	}
+	if os.Getenv("RUN_MODE") == "dev" {
+		handlers = append(handlers, cors.Default())
 	}
 	handlers = append(handlers, handler)
 	r.POST(h.router, handlers...)

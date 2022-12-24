@@ -9,7 +9,9 @@ import (
 	modelConvert "homePage/backend/model_convert"
 	"homePage/backend/util"
 	"net/http"
+	"os"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -37,6 +39,9 @@ func (h *PaperHandler) Get(r *gin.Engine) error {
 			return
 		}
 	}
+	if os.Getenv("RUN_MODE") == "dev" {
+		handlers = append(handlers, cors.Default())
+	}
 	handlers = append(handlers, handler)
 	r.GET(h.router+"/:id", handlers...)
 	return nil
@@ -59,6 +64,9 @@ func (h *PaperHandler) List(r *gin.Engine) error {
 			})
 			return
 		}
+	}
+	if os.Getenv("RUN_MODE") == "dev" {
+		handlers = append(handlers, cors.Default())
 	}
 	handlers = append(handlers, handler)
 	r.GET(h.router, handlers...)
@@ -87,6 +95,9 @@ func (h *PaperHandler) Update(r *gin.Engine) error {
 			g.JSON(http.StatusOK, nil)
 			return
 		}
+	}
+	if os.Getenv("RUN_MODE") == "dev" {
+		handlers = append(handlers, cors.Default())
 	}
 	handlers = append(handlers, handler)
 	r.PUT(h.router+"/:id", handlers...)
@@ -120,6 +131,9 @@ func (h *PaperHandler) Create(r *gin.Engine) error {
 			g.JSON(http.StatusOK, nil)
 			return
 		}
+	}
+	if os.Getenv("RUN_MODE") == "dev" {
+		handlers = append(handlers, cors.Default())
 	}
 	handlers = append(handlers, handler)
 	r.POST(h.router, handlers...)
@@ -155,6 +169,9 @@ func (h *PaperHandler) Delete(r *gin.Engine) error {
 			g.JSON(http.StatusOK, nil)
 			return
 		}
+	}
+	if os.Getenv("RUN_MODE") == "dev" {
+		handlers = append(handlers, cors.Default())
 	}
 	handlers = append(handlers, handler)
 	r.DELETE(h.router+"/:id", handlers...)

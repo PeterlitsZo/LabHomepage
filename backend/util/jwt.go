@@ -18,18 +18,20 @@ type User struct {
 
 type UserClaims struct {
 	User
-	jwt.StandardClaims
+	jwt.RegisteredClaims
 }
 
 func GenerateJWT(user User) (string, error) {
 	nowTime := time.Now()
-	expireTime := nowTime.Add(24 * time.Hour)
+	expireTime := nowTime.Add(7 * 24 * time.Hour)
 
 	claims := UserClaims{
 		user,
-		jwt.StandardClaims{
-			ExpiresAt: expireTime.Unix(),
-			Issuer:    "hello",
+		jwt.RegisteredClaims{
+			ExpiresAt: &jwt.NumericDate{
+				expireTime,
+			},
+			Issuer: "hello",
 		},
 	}
 
@@ -65,7 +67,7 @@ func IsJwtValid(JWT string) (bool, error) {
 		return false, myError.ClaimsTransFailed
 	} else if !tokenClaims.Valid {
 		return false, myError.TokenClaimsIsInvalid
-	} else if time.Now().Unix() > claims.ExpiresAt {
+	} else if time.Now().Unix() > claims.ExpiresAt.Unix() {
 		return false, myError.JwtExpireTime
 	}
 	return true, nil
