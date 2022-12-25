@@ -11,9 +11,11 @@ services:
       - "MYSQL_DATABASE=homePage"
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-      timeout: 20s
+      timeout: 5s
+      start_period: 5s
+      interval: 5s
       retries: 10
-  web:
+  backend:
     build: ./backend
     depends_on:
       mysql:
