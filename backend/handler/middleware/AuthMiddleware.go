@@ -14,19 +14,19 @@ func NewAuthMiddleware() gin.HandlerFunc {
 		if token, ok := g.Request.Header["Authorization"]; !ok {
 			g.AbortWithError(http.StatusUnauthorized, handlerError.AuthorizationIsEmpty)
 			g.JSON(http.StatusUnauthorized, gin.H{
-				"message": handlerError.AuthorizationIsEmpty,
+				"message": handlerError.AuthorizationIsEmpty.Error(),
 			})
 			return
 		} else if len(token) == 0 {
 			g.AbortWithError(http.StatusUnauthorized, handlerError.AuthorizationIsEmpty)
 			g.JSON(http.StatusUnauthorized, gin.H{
-				"message": handlerError.AuthorizationIsEmpty,
+				"message": handlerError.AuthorizationIsEmpty.Error(),
 			})
 			return
 		} else if jwt := util.GetBearerToken(token[0]); jwt == "" {
 			g.AbortWithError(http.StatusUnauthorized, handlerError.TokenIsInvalid)
 			g.JSON(http.StatusUnauthorized, gin.H{
-				"message": handlerError.TokenIsInvalid,
+				"message": handlerError.TokenIsInvalid.Error(),
 			})
 			return
 		} else if isValid, err := util.IsJwtValid(jwt); err != nil {
@@ -38,7 +38,7 @@ func NewAuthMiddleware() gin.HandlerFunc {
 		} else if !isValid {
 			g.AbortWithError(http.StatusUnauthorized, handlerError.JwtIsInvalid)
 			g.JSON(http.StatusUnauthorized, gin.H{
-				"message": handlerError.JwtIsInvalid,
+				"message": handlerError.JwtIsInvalid.Error(),
 			})
 			return
 		} else if usr, err := util.ParseJWT(jwt); err != nil {
@@ -50,7 +50,7 @@ func NewAuthMiddleware() gin.HandlerFunc {
 		} else if usr.UserId == 0 {
 			g.AbortWithError(http.StatusUnauthorized, handlerError.UserIdIsInvalid)
 			g.JSON(http.StatusUnauthorized, gin.H{
-				"message": handlerError.UserIdIsInvalid,
+				"message": handlerError.UserIdIsInvalid.Error(),
 			})
 			return
 		} else if user, err := databaseBusiness.GetUserByID(usr.UserId); err != nil {
@@ -62,7 +62,7 @@ func NewAuthMiddleware() gin.HandlerFunc {
 		} else if user.Name != usr.Username {
 			g.AbortWithError(http.StatusUnauthorized, handlerError.UsernameIsInvalid)
 			g.JSON(http.StatusUnauthorized, gin.H{
-				"message": handlerError.UsernameIsInvalid,
+				"message": handlerError.UsernameIsInvalid.Error(),
 			})
 			return
 		} else {
