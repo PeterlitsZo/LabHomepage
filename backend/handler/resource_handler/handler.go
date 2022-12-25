@@ -15,6 +15,6 @@ var Handlers = []interface{}{
 	NewPaperHandler("/api/v1/papers"),
 	NewPersonHandler("/api/v1/people"),
 	NewResourceHandler("/api/v1/resources"),
-	NewTokenHandler("/api/v1/tokens"),
+	NewTokenHandler("/api/v1/login"),
 	NewUserHandler("/api/v1/users"),
 }

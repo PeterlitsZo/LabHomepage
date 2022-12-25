@@ -3,7 +3,6 @@ package resourceHandler
 import (
 	databaseBusiness "homePage/backend/database/database_business"
 	handlerError "homePage/backend/handler/handler_error"
-	viewModel "homePage/backend/handler/view_model"
 	"homePage/backend/util"
 	"net/http"
 
@@ -31,46 +30,62 @@ func (h *TokenHandler) Create(r *gin.Engine) error {
 		// middleware.NewAuthMiddleware(),
 	}
 	handler := func(g *gin.Context) {
-		var user viewModel.UserView
-		if err := g.ShouldBind(&user); err != nil {
+		var loginRequest struct {
+			Name     string `json:"username"`
+			Password string `json:"password"`
+		}
+
+		if err := g.ShouldBind(&loginRequest); err != nil {
 			g.JSON(http.StatusBadRequest, gin.H{
 				"message": err.Error(),
 			})
 			return
-		} else if len(user.Name) == 0 {
+		}
+		if len(loginRequest.Name) == 0 {
 			g.JSON(http.StatusBadRequest, gin.H{
 				"message": handlerError.UserNameEmpty.Error(),
 			})
 			return
-		} else if ret, err := databaseBusiness.GetUserByName(user.Name); ret == nil || err != nil {
-			if err != nil {
-				g.JSON(http.StatusInternalServerError, gin.H{
-					"message": err.Error(),
-				})
-				return
-			} else if ret == nil {
-				g.JSON(http.StatusBadRequest, gin.H{
-					"message": handlerError.UserNotExist.Error(),
-				})
-				return
-			} else if !util.CheckPasswordHash(user.Password, ret.Password) {
-				g.JSON(http.StatusBadRequest, gin.H{
-					"message": handlerError.PasswordNotCorrect.Error(),
-				})
-				return
-			}
-		} else if jwt, err := util.GenerateJWT(util.User{
-			Username: ret.Name,
-			UserId:   ret.ID,
-		}); err != nil {
+		}
+
+		user, err := databaseBusiness.GetUserByName(loginRequest.Name)
+		if err != nil {
 			g.JSON(http.StatusInternalServerError, gin.H{
 				"message": err.Error(),
 			})
 			return
-		} else {
-			g.JSON(http.StatusOK, "Bearer "+jwt)
+		}
+		if user == nil {
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": handlerError.UserNotExist.Error(),
+			})
 			return
 		}
+
+		// Check username-password pair.
+		if !util.CheckPasswordHash(loginRequest.Password, user.Password) {
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": handlerError.PasswordNotCorrect.Error(),
+			})
+			return
+		}
+
+		// Generate token to return.
+		jwt, err := util.GenerateJWT(util.User{
+			Username: user.Name,
+			UserId:   user.ID,
+		})
+		if err != nil {
+			g.JSON(http.StatusInternalServerError, gin.H{
+				"message": err.Error(),
+			})
+			return
+		}
+
+		g.JSON(http.StatusOK, gin.H{
+			"token": jwt,
+		})
+		return
 	}
 	handlers = append(handlers, handler)
 	r.POST(h.router, handlers...)

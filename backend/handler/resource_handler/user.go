@@ -55,7 +55,7 @@ func (h *UserHandler) List(r *gin.Engine) error {
 	}
 	handler := func(g *gin.Context) {
 		type User struct {
-			User []*viewModel.UserView `json:"user"`
+			User []*viewModel.UserView `json:"users"`
 		}
 		if user, err := databaseBusiness.ListUser(); err != nil {
 			g.JSON(http.StatusInternalServerError, gin.H{
@@ -101,7 +101,7 @@ func (h *UserHandler) Update(r *gin.Engine) error {
 			})
 			return
 		} else {
-			g.JSON(http.StatusOK, nil)
+			g.JSON(http.StatusOK, User)
 			return
 		}
 	}
@@ -115,20 +115,34 @@ func (h *UserHandler) Create(r *gin.Engine) error {
 		// middleware.NewAuthMiddleware(),
 	}
 	handler := func(g *gin.Context) {
-		var User viewModel.UserView
-		if err := g.ShouldBind(&User); err != nil {
+		var createUserReq struct {
+			viewModel.UserView
+			Password string `json:"password"`
+		}
+		if err := g.ShouldBind(&createUserReq); err != nil {
 			g.JSON(http.StatusBadRequest, gin.H{
 				"message": err.Error(),
 			})
 			log.Println("User 格式不正确")
 			return
-		} else if len(User.Name) == 0 {
+		}
+		if len(createUserReq.Name) == 0 {
 			g.JSON(http.StatusBadRequest, gin.H{
 				"message": handlerError.UserNameEmpty.Error(),
 			})
 			log.Println("username 为空")
 			return
-		} else if ret, err := databaseBusiness.GetUserByName(User.Name); ret != nil || err != nil {
+		}
+		if len(createUserReq.Password) == 0 {
+			g.JSON(http.StatusBadRequest, gin.H{
+				"message": "password is empty",
+			})
+			log.Println("password 为空")
+			return
+		}
+		createUserReq.UserView.Password = createUserReq.Password
+
+		if ret, err := databaseBusiness.GetUserByName(createUserReq.Name); ret != nil || err != nil {
 			if err != nil {
 				log.Fatalln("数据库查询用户出错")
 				g.JSON(http.StatusInternalServerError, gin.H{
@@ -142,7 +156,7 @@ func (h *UserHandler) Create(r *gin.Engine) error {
 				})
 				return
 			}
-		} else if err = databaseBusiness.CreateUser(modelConvert.ViewModel2DatabaseModelUser(&User)); err != nil {
+		} else if err = databaseBusiness.CreateUser(modelConvert.ViewModel2DatabaseModelUser(&createUserReq.UserView)); err != nil {
 			log.Fatalln("数据库创建用户失败")
 			g.JSON(http.StatusInternalServerError, gin.H{
 				"message": err.Error(),
