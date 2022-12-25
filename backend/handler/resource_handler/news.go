@@ -19,7 +19,7 @@ type NewsHandler struct {
 
 func (h *NewsHandler) Get(r *gin.Engine) error {
 	handlers := []gin.HandlerFunc{
-		middleware.NewAuthMiddleware(),
+		// middleware.NewAuthMiddleware(),
 	}
 	handler := func(g *gin.Context) {
 		if id, err := util.String2Uint(g.Param("id")); err != nil {
@@ -50,7 +50,7 @@ func (h *NewsHandler) Get(r *gin.Engine) error {
 
 func (h *NewsHandler) List(r *gin.Engine) error {
 	handlers := []gin.HandlerFunc{
-		middleware.NewAuthMiddleware(),
+		// middleware.NewAuthMiddleware(),
 	}
 	handler := func(g *gin.Context) {
 		type News struct {

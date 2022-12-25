@@ -19,7 +19,7 @@ type ResourceHandler struct {
 
 func (h *ResourceHandler) Get(r *gin.Engine) error {
 	handlers := []gin.HandlerFunc{
-		middleware.NewAuthMiddleware(),
+		// middleware.NewAuthMiddleware(),
 	}
 	handler := func(g *gin.Context) {
 		if id, err := util.String2Uint(g.Param("id")); err != nil {
@@ -50,7 +50,7 @@ func (h *ResourceHandler) Get(r *gin.Engine) error {
 
 func (h *ResourceHandler) List(r *gin.Engine) error {
 	handlers := []gin.HandlerFunc{
-		middleware.NewAuthMiddleware(),
+		// middleware.NewAuthMiddleware(),
 	}
 	handler := func(g *gin.Context) {
 		type Resource struct {
