@@ -11,7 +11,10 @@ import (
 func main() {
 	r := gin.Default()
 	if os.Getenv("RUN_MODE") == "dev" {
-		r.Use(cors.Default())
+		config := cors.DefaultConfig()
+		config.AllowAllOrigins = true
+		config.AllowHeaders = append(config.AllowHeaders, "Authorization")
+		r.Use(cors.New(config))
 	}
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{

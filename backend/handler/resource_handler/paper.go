@@ -54,7 +54,7 @@ func (h *PaperHandler) List(r *gin.Engine) error {
 	}
 	handler := func(g *gin.Context) {
 		type Paper struct {
-			Paper []*viewModel.PaperView `json:"paper"`
+			Paper []*viewModel.PaperView `json:"papers"`
 		}
 		if paper, err := databaseBusiness.ListPaper(); err != nil {
 			g.JSON(http.StatusInternalServerError, gin.H{

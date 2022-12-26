@@ -54,7 +54,7 @@ func (h *PersonHandler) List(r *gin.Engine) error {
 	}
 	handler := func(g *gin.Context) {
 		type Person struct {
-			Person []*viewModel.PersonView `json:"person"`
+			Person []*viewModel.PersonView `json:"people"`
 		}
 		if person, err := databaseBusiness.ListPerson(); err != nil {
 			g.JSON(http.StatusInternalServerError, gin.H{

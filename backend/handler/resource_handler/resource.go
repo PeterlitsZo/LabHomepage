@@ -54,7 +54,7 @@ func (h *ResourceHandler) List(r *gin.Engine) error {
 	}
 	handler := func(g *gin.Context) {
 		type Resource struct {
-			Resource []*viewModel.ResourceView `json:"resource"`
+			Resource []*viewModel.ResourceView `json:"resources"`
 		}
 		if resource, err := databaseBusiness.ListResource(); err != nil {
 			g.JSON(http.StatusInternalServerError, gin.H{
