@@ -59,7 +59,7 @@ func (m *UserManager) Update(filter *databaseModel.UserFilter, user *databaseMod
 		return databaseError.DbConnectionNotRegistered
 	} else if dbConn := m.GetDbConnection().Model(filter); dbConn.Error != nil {
 		return dbConn.Error
-	} else if dbConn = dbConn.Updates(user); dbConn.Error != nil {
+	} else if dbConn = dbConn.Model(&databaseModel.User{}).Updates(user); dbConn.Error != nil {
 		return dbConn.Error
 	} else {
 		return nil
