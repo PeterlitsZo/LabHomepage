@@ -125,15 +125,15 @@ func (h *ResourceHandler) Create(r *gin.Engine) error {
 				"message": handlerError.ResourceTitleEmpty.Error(),
 			})
 			return
-		} else if ret, err := databaseBusiness.GetResourceByTitle(resource.Title); ret == nil || err != nil {
+		} else if ret, err := databaseBusiness.GetResourceByTitle(resource.Title); ret != nil || err != nil {
 			if err != nil {
 				g.JSON(http.StatusInternalServerError, gin.H{
 					"message": err.Error(),
 				})
 				return
-			} else if ret == nil {
+			} else if ret != nil {
 				g.JSON(http.StatusBadRequest, gin.H{
-					"message": handlerError.ResourceNotExist.Error(),
+					"message": handlerError.ResourceAlreadtExist.Error(),
 				})
 				return
 			}
