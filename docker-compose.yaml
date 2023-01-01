@@ -1,0 +1,31 @@
+version: '3'
+services:
+  mysql:
+    restart: always
+    image: mysql:latest
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      - "MYSQL_HOST=127.0.0.1:3306"
+      - "MYSQL_ROOT_PASSWORD=123456"
+      - "MYSQL_DATABASE=homePage"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 5s
+      start_period: 5s
+      interval: 5s
+      retries: 10
+  backend:
+    build: ./backend
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      - "RUN_MODE=${BACKEND_RUN_MODE:-prod}"
+      - "DB_USER=root"
+      - "DB_PASSWORD=123456"
+      - "DB_HOST=mysql:3306"
+      - "DB_NAME=homePage"
+    ports:
+      - 8080:8080
+    command: "/usr/local/bin/backend"
