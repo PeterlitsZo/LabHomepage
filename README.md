@@ -1,0 +1,1 @@
+docker compose build --build-arg GOPROXY=<proxy-url>
