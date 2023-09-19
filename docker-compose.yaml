@@ -32,7 +32,7 @@ services:
   caddy:
     image: caddy
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - ./caddy:/data
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - ./caddy/data:/data
     ports:
       - 80:80
