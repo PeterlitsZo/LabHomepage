@@ -37,6 +37,10 @@ export const useGetNews = (id: string) => {
   return query;
 }
 
+/**
+ * Get a `createNews` object. Use method `.mutate` to send request. See
+ * TanStack/react-query's document to know more.
+ */
 export const useCreateNews = () => {
   type CreateNewsRequest = {
     title: string;

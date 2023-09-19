@@ -1,1 +1,0 @@
-export { CreateResource as default } from './createResource';

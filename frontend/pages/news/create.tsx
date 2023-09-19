@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head'
+import { useRouter } from "next/router";
+
 import Nav from '../../components/Nav';
-import CreateNews from '../../components/CreateNews';
+import Editor from "../../components/Editor";
+
+import { useCreateNews } from "../../requests/news";
 
 export default function Index() {
+  const createNews = useCreateNews();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (createNews.isSuccess) {
+      router.push("/news");
+    }
+  }, [createNews, router]);
+
   return (
     <>
       <Head>
@@ -13,7 +26,11 @@ export default function Index() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Nav />
-      <CreateNews />
+      <Editor
+        submit={(titleContent) => createNews.mutate(titleContent)}
+        titlePlaceholder="The title of the news"
+        contentPlaceholder="The content of the news"
+      />
     </>
   )
 }

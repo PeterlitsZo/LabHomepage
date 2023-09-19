@@ -1,10 +1,7 @@
-import { useContext, useEffect, useState } from "react";
-import { PlusCircle } from 'lucide-react';
+import { useEffect, useState } from "react";
 
-import { AuthContext } from "../../contexts/auth";
-import { Resource as ResourceType, useGetResource, useListResource } from "../../requests/resources"
-import Link from "next/link";
-import { Router, useRouter } from "next/router";
+import { useGetResource } from "../../requests/resources"
+import MarkdownCard from "../MarkdownCard";
 
 interface ResourceProps {
   id: string;
@@ -13,25 +10,21 @@ interface ResourceProps {
 export const Resource = (props: ResourceProps) => {
   const getResourceQuery = useGetResource(props.id);
 
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+
+  useEffect(() => {
+    if (getResourceQuery.isSuccess) {
+      const resource = getResourceQuery.data.data;
+      setTitle(resource.title);
+      setContent(resource.content);
+    }
+  }, [getResourceQuery.isSuccess]);
+
   return (
-    <main className="max-w-3xl m-auto py-24">
-      <div className="border border-slate-300 p-8 rounded">
-        {getResourceQuery.isSuccess && (function() {
-          const resource = getResourceQuery.data.data;
-          return (
-            <>
-              <h1 className="text-3xl">
-                {resource.title}
-              </h1>
-              {resource.content !== "" && (
-                <div className="mt-4 text-lg">
-                  {resource.content}
-                </div>
-              )}
-            </>
-          )
-        })()}
-      </div>
-    </main>
+    <MarkdownCard
+      title={title}
+      content={content}
+    />
   )
 }

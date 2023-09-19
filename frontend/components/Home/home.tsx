@@ -20,12 +20,12 @@ export const Home = () => {
         <p className="pt-2 text-xl text-slate-500">
           To be or not to be.
         </p>
-        <div className="z-0 absolute -right-12 -top-12">
+        <div className="z-0 absolute -right-12 -top-12 w-200 h-200">
           <Image
             src="/homepage-pic.png"
             alt="Homepage Picture"
-            width={700}
-            height={700}
+            className="object-contain"
+            fill
           />
         </div>
       </div>

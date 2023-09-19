@@ -1,1 +1,0 @@
-export { CreatePaper as default } from './createPaper';

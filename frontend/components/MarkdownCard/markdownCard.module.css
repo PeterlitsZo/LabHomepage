@@ -1,0 +1,1006 @@
+.reactMarkdown {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  margin: 0;
+  color: #24292f;
+  background-color: #ffffff;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.reactMarkdown .octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.reactMarkdown h1:hover .anchor .octicon-link:before,
+.reactMarkdown h2:hover .anchor .octicon-link:before,
+.reactMarkdown h3:hover .anchor .octicon-link:before,
+.reactMarkdown h4:hover .anchor .octicon-link:before,
+.reactMarkdown h5:hover .anchor .octicon-link:before,
+.reactMarkdown h6:hover .anchor .octicon-link:before {
+  width: 16px;
+  height: 16px;
+  content: ' ';
+  display: inline-block;
+  background-color: currentColor;
+  -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' aria-hidden='true'><path fill-rule='evenodd' d='M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z'></path></svg>");
+  mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' aria-hidden='true'><path fill-rule='evenodd' d='M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z'></path></svg>");
+}
+
+.reactMarkdown details,
+.reactMarkdown figcaption,
+.reactMarkdown figure {
+  display: block;
+}
+
+.reactMarkdown summary {
+  display: list-item;
+}
+
+.reactMarkdown [hidden] {
+  display: none !important;
+}
+
+.reactMarkdown a {
+  background-color: transparent;
+  color: #0969da;
+  text-decoration: none;
+}
+
+.reactMarkdown abbr[title] {
+  border-bottom: none;
+  text-decoration: underline dotted;
+}
+
+.reactMarkdown b,
+.reactMarkdown strong {
+  font-weight: 600;
+}
+
+.reactMarkdown dfn {
+  font-style: italic;
+}
+
+.reactMarkdown h1 {
+  margin: .67em 0;
+  font-weight: 600;
+  padding-bottom: .3em;
+  font-size: 2em;
+  border-bottom: 1px solid hsla(210,18%,87%,1);
+}
+
+.reactMarkdown mark {
+  background-color: #fff8c5;
+  color: #24292f;
+}
+
+.reactMarkdown small {
+  font-size: 90%;
+}
+
+.reactMarkdown sub,
+.reactMarkdown sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.reactMarkdown sub {
+  bottom: -0.25em;
+}
+
+.reactMarkdown sup {
+  top: -0.5em;
+}
+
+.reactMarkdown img {
+  border-style: none;
+  max-width: 100%;
+  box-sizing: content-box;
+  background-color: #ffffff;
+}
+
+.reactMarkdown code,
+.reactMarkdown kbd,
+.reactMarkdown pre,
+.reactMarkdown samp {
+  font-family: monospace;
+  font-size: 1em;
+}
+
+.reactMarkdown figure {
+  margin: 1em 40px;
+}
+
+.reactMarkdown hr {
+  box-sizing: content-box;
+  overflow: hidden;
+  background: transparent;
+  border-bottom: 1px solid hsla(210,18%,87%,1);
+  height: .25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #d0d7de;
+  border: 0;
+}
+
+.reactMarkdown input {
+  font: inherit;
+  margin: 0;
+  overflow: visible;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.reactMarkdown [type=button],
+.reactMarkdown [type=reset],
+.reactMarkdown [type=submit] {
+  -webkit-appearance: button;
+}
+
+.reactMarkdown [type=checkbox],
+.reactMarkdown [type=radio] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.reactMarkdown [type=number]::-webkit-inner-spin-button,
+.reactMarkdown [type=number]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+.reactMarkdown [type=search]::-webkit-search-cancel-button,
+.reactMarkdown [type=search]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+.reactMarkdown ::-webkit-input-placeholder {
+  color: inherit;
+  opacity: .54;
+}
+
+.reactMarkdown ::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+
+.reactMarkdown a:hover {
+  text-decoration: underline;
+}
+
+.reactMarkdown ::placeholder {
+  color: #6e7781;
+  opacity: 1;
+}
+
+.reactMarkdown hr::before {
+  display: table;
+  content: "";
+}
+
+.reactMarkdown hr::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.reactMarkdown table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow: auto;
+}
+
+.reactMarkdown td,
+.reactMarkdown th {
+  padding: 0;
+}
+
+.reactMarkdown details summary {
+  cursor: pointer;
+}
+
+.reactMarkdown details:not([open])>*:not(summary) {
+  display: none !important;
+}
+
+.reactMarkdown a:focus,
+.reactMarkdown [role=button]:focus,
+.reactMarkdown input[type=radio]:focus,
+.reactMarkdown input[type=checkbox]:focus {
+  outline: 2px solid #0969da;
+  outline-offset: -2px;
+  box-shadow: none;
+}
+
+.reactMarkdown a:focus:not(:focus-visible),
+.reactMarkdown [role=button]:focus:not(:focus-visible),
+.reactMarkdown input[type=radio]:focus:not(:focus-visible),
+.reactMarkdown input[type=checkbox]:focus:not(:focus-visible) {
+  outline: solid 1px transparent;
+}
+
+.reactMarkdown a:focus-visible,
+.reactMarkdown [role=button]:focus-visible,
+.reactMarkdown input[type=radio]:focus-visible,
+.reactMarkdown input[type=checkbox]:focus-visible {
+  outline: 2px solid #0969da;
+  outline-offset: -2px;
+  box-shadow: none;
+}
+
+.reactMarkdown a:not([class]):focus,
+.reactMarkdown a:not([class]):focus-visible,
+.reactMarkdown input[type=radio]:focus,
+.reactMarkdown input[type=radio]:focus-visible,
+.reactMarkdown input[type=checkbox]:focus,
+.reactMarkdown input[type=checkbox]:focus-visible {
+  outline-offset: 0;
+}
+
+.reactMarkdown kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+  line-height: 10px;
+  color: #24292f;
+  vertical-align: middle;
+  background-color: #f6f8fa;
+  border: solid 1px rgba(175,184,193,0.2);
+  border-bottom-color: rgba(175,184,193,0.2);
+  border-radius: 6px;
+  box-shadow: inset 0 -1px 0 rgba(175,184,193,0.2);
+}
+
+.reactMarkdown h1,
+.reactMarkdown h2,
+.reactMarkdown h3,
+.reactMarkdown h4,
+.reactMarkdown h5,
+.reactMarkdown h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.reactMarkdown h2 {
+  font-weight: 600;
+  padding-bottom: .3em;
+  font-size: 1.5em;
+  border-bottom: 1px solid hsla(210,18%,87%,1);
+}
+
+.reactMarkdown h3 {
+  font-weight: 600;
+  font-size: 1.25em;
+}
+
+.reactMarkdown h4 {
+  font-weight: 600;
+  font-size: 1em;
+}
+
+.reactMarkdown h5 {
+  font-weight: 600;
+  font-size: .875em;
+}
+
+.reactMarkdown h6 {
+  font-weight: 600;
+  font-size: .85em;
+  color: #57606a;
+}
+
+.reactMarkdown p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.reactMarkdown blockquote {
+  margin: 0;
+  padding: 0 1em;
+  color: #57606a;
+  border-left: .25em solid #d0d7de;
+}
+
+.reactMarkdown ul,
+.reactMarkdown ol {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 2em;
+}
+
+.reactMarkdown ol ol,
+.reactMarkdown ul ol {
+  list-style-type: lower-roman;
+}
+
+.reactMarkdown ul ul ol,
+.reactMarkdown ul ol ol,
+.reactMarkdown ol ul ol,
+.reactMarkdown ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.reactMarkdown dd {
+  margin-left: 0;
+}
+
+.reactMarkdown tt,
+.reactMarkdown code,
+.reactMarkdown samp {
+  font-family: ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+  font-size: 12px;
+}
+
+.reactMarkdown pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+  font-size: 12px;
+  word-wrap: normal;
+}
+
+.reactMarkdown .octicon {
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.reactMarkdown input::-webkit-outer-spin-button,
+.reactMarkdown input::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.reactMarkdown::before {
+  display: table;
+  content: "";
+}
+
+.reactMarkdown::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.reactMarkdown>*:first-child {
+  margin-top: 0 !important;
+}
+
+.reactMarkdown>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.reactMarkdown a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.reactMarkdown .absent {
+  color: #cf222e;
+}
+
+.reactMarkdown .anchor {
+  float: left;
+  padding-right: 4px;
+  margin-left: -20px;
+  line-height: 1;
+}
+
+.reactMarkdown .anchor:focus {
+  outline: none;
+}
+
+.reactMarkdown p,
+.reactMarkdown blockquote,
+.reactMarkdown ul,
+.reactMarkdown ol,
+.reactMarkdown dl,
+.reactMarkdown table,
+.reactMarkdown pre,
+.reactMarkdown details {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.reactMarkdown blockquote>:first-child {
+  margin-top: 0;
+}
+
+.reactMarkdown blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.reactMarkdown h1 .octicon-link,
+.reactMarkdown h2 .octicon-link,
+.reactMarkdown h3 .octicon-link,
+.reactMarkdown h4 .octicon-link,
+.reactMarkdown h5 .octicon-link,
+.reactMarkdown h6 .octicon-link {
+  color: #24292f;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.reactMarkdown h1:hover .anchor,
+.reactMarkdown h2:hover .anchor,
+.reactMarkdown h3:hover .anchor,
+.reactMarkdown h4:hover .anchor,
+.reactMarkdown h5:hover .anchor,
+.reactMarkdown h6:hover .anchor {
+  text-decoration: none;
+}
+
+.reactMarkdown h1:hover .anchor .octicon-link,
+.reactMarkdown h2:hover .anchor .octicon-link,
+.reactMarkdown h3:hover .anchor .octicon-link,
+.reactMarkdown h4:hover .anchor .octicon-link,
+.reactMarkdown h5:hover .anchor .octicon-link,
+.reactMarkdown h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+.reactMarkdown h1 tt,
+.reactMarkdown h1 code,
+.reactMarkdown h2 tt,
+.reactMarkdown h2 code,
+.reactMarkdown h3 tt,
+.reactMarkdown h3 code,
+.reactMarkdown h4 tt,
+.reactMarkdown h4 code,
+.reactMarkdown h5 tt,
+.reactMarkdown h5 code,
+.reactMarkdown h6 tt,
+.reactMarkdown h6 code {
+  padding: 0 .2em;
+  font-size: inherit;
+}
+
+.reactMarkdown summary h1,
+.reactMarkdown summary h2,
+.reactMarkdown summary h3,
+.reactMarkdown summary h4,
+.reactMarkdown summary h5,
+.reactMarkdown summary h6 {
+  display: inline-block;
+}
+
+.reactMarkdown summary h1 .anchor,
+.reactMarkdown summary h2 .anchor,
+.reactMarkdown summary h3 .anchor,
+.reactMarkdown summary h4 .anchor,
+.reactMarkdown summary h5 .anchor,
+.reactMarkdown summary h6 .anchor {
+  margin-left: -40px;
+}
+
+.reactMarkdown summary h1,
+.reactMarkdown summary h2 {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.reactMarkdown ul.no-list,
+.reactMarkdown ol.no-list {
+  padding: 0;
+  list-style-type: none;
+}
+
+.reactMarkdown ol[type=a] {
+  list-style-type: lower-alpha;
+}
+
+.reactMarkdown ol[type=A] {
+  list-style-type: upper-alpha;
+}
+
+.reactMarkdown ol[type=i] {
+  list-style-type: lower-roman;
+}
+
+.reactMarkdown ol[type=I] {
+  list-style-type: upper-roman;
+}
+
+.reactMarkdown ol[type="1"] {
+  list-style-type: decimal;
+}
+
+.reactMarkdown div>ol:not([type]) {
+  list-style-type: decimal;
+}
+
+.reactMarkdown ul ul,
+.reactMarkdown ul ol,
+.reactMarkdown ol ol,
+.reactMarkdown ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.reactMarkdown li>p {
+  margin-top: 16px;
+}
+
+.reactMarkdown li+li {
+  margin-top: .25em;
+}
+
+.reactMarkdown dl {
+  padding: 0;
+}
+
+.reactMarkdown dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.reactMarkdown dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.reactMarkdown table th {
+  font-weight: 600;
+}
+
+.reactMarkdown table th,
+.reactMarkdown table td {
+  padding: 6px 13px;
+  border: 1px solid #d0d7de;
+}
+
+.reactMarkdown table tr {
+  background-color: #ffffff;
+  border-top: 1px solid hsla(210,18%,87%,1);
+}
+
+.reactMarkdown table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+.reactMarkdown table img {
+  background-color: transparent;
+}
+
+.reactMarkdown img[align=right] {
+  padding-left: 20px;
+}
+
+.reactMarkdown img[align=left] {
+  padding-right: 20px;
+}
+
+.reactMarkdown .emoji {
+  max-width: none;
+  vertical-align: text-top;
+  background-color: transparent;
+}
+
+.reactMarkdown span.frame {
+  display: block;
+  overflow: hidden;
+}
+
+.reactMarkdown span.frame>span {
+  display: block;
+  float: left;
+  width: auto;
+  padding: 7px;
+  margin: 13px 0 0;
+  overflow: hidden;
+  border: 1px solid #d0d7de;
+}
+
+.reactMarkdown span.frame span img {
+  display: block;
+  float: left;
+}
+
+.reactMarkdown span.frame span span {
+  display: block;
+  padding: 5px 0 0;
+  clear: both;
+  color: #24292f;
+}
+
+.reactMarkdown span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+.reactMarkdown span.align-center>span {
+  display: block;
+  margin: 13px auto 0;
+  overflow: hidden;
+  text-align: center;
+}
+
+.reactMarkdown span.align-center span img {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.reactMarkdown span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+.reactMarkdown span.align-right>span {
+  display: block;
+  margin: 13px 0 0;
+  overflow: hidden;
+  text-align: right;
+}
+
+.reactMarkdown span.align-right span img {
+  margin: 0;
+  text-align: right;
+}
+
+.reactMarkdown span.float-left {
+  display: block;
+  float: left;
+  margin-right: 13px;
+  overflow: hidden;
+}
+
+.reactMarkdown span.float-left span {
+  margin: 13px 0 0;
+}
+
+.reactMarkdown span.float-right {
+  display: block;
+  float: right;
+  margin-left: 13px;
+  overflow: hidden;
+}
+
+.reactMarkdown span.float-right>span {
+  display: block;
+  margin: 13px auto 0;
+  overflow: hidden;
+  text-align: right;
+}
+
+.reactMarkdown code,
+.reactMarkdown tt {
+  padding: .2em .4em;
+  margin: 0;
+  font-size: 85%;
+  white-space: break-spaces;
+  background-color: rgba(175,184,193,0.2);
+  border-radius: 6px;
+}
+
+.reactMarkdown code br,
+.reactMarkdown tt br {
+  display: none;
+}
+
+.reactMarkdown del code {
+  text-decoration: inherit;
+}
+
+.reactMarkdown samp {
+  font-size: 85%;
+}
+
+.reactMarkdown pre code {
+  font-size: 100%;
+}
+
+.reactMarkdown pre>code {
+  padding: 0;
+  margin: 0;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.reactMarkdown .highlight {
+  margin-bottom: 16px;
+}
+
+.reactMarkdown .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.reactMarkdown .highlight pre,
+.reactMarkdown pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  border-radius: 6px;
+}
+
+.reactMarkdown pre code,
+.reactMarkdown pre tt {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.reactMarkdown .csv-data td,
+.reactMarkdown .csv-data th {
+  padding: 5px;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.reactMarkdown .csv-data .blob-num {
+  padding: 10px 8px 9px;
+  text-align: right;
+  background: #ffffff;
+  border: 0;
+}
+
+.reactMarkdown .csv-data tr {
+  border-top: 0;
+}
+
+.reactMarkdown .csv-data th {
+  font-weight: 600;
+  background: #f6f8fa;
+  border-top: 0;
+}
+
+.reactMarkdown [data-footnote-ref]::before {
+  content: "[";
+}
+
+.reactMarkdown [data-footnote-ref]::after {
+  content: "]";
+}
+
+.reactMarkdown .footnotes {
+  font-size: 12px;
+  color: #57606a;
+  border-top: 1px solid #d0d7de;
+}
+
+.reactMarkdown .footnotes ol {
+  padding-left: 16px;
+}
+
+.reactMarkdown .footnotes ol ul {
+  display: inline-block;
+  padding-left: 16px;
+  margin-top: 16px;
+}
+
+.reactMarkdown .footnotes li {
+  position: relative;
+}
+
+.reactMarkdown .footnotes li:target::before {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  bottom: -8px;
+  left: -24px;
+  pointer-events: none;
+  content: "";
+  border: 2px solid #0969da;
+  border-radius: 6px;
+}
+
+.reactMarkdown .footnotes li:target {
+  color: #24292f;
+}
+
+.reactMarkdown .footnotes .data-footnote-backref g-emoji {
+  font-family: monospace;
+}
+
+.reactMarkdown .pl-c {
+  color: #6e7781;
+}
+
+.reactMarkdown .pl-c1,
+.reactMarkdown .pl-s .pl-v {
+  color: #0550ae;
+}
+
+.reactMarkdown .pl-e,
+.reactMarkdown .pl-en {
+  color: #8250df;
+}
+
+.reactMarkdown .pl-smi,
+.reactMarkdown .pl-s .pl-s1 {
+  color: #24292f;
+}
+
+.reactMarkdown .pl-ent {
+  color: #116329;
+}
+
+.reactMarkdown .pl-k {
+  color: #cf222e;
+}
+
+.reactMarkdown .pl-s,
+.reactMarkdown .pl-pds,
+.reactMarkdown .pl-s .pl-pse .pl-s1,
+.reactMarkdown .pl-sr,
+.reactMarkdown .pl-sr .pl-cce,
+.reactMarkdown .pl-sr .pl-sre,
+.reactMarkdown .pl-sr .pl-sra {
+  color: #0a3069;
+}
+
+.reactMarkdown .pl-v,
+.reactMarkdown .pl-smw {
+  color: #953800;
+}
+
+.reactMarkdown .pl-bu {
+  color: #82071e;
+}
+
+.reactMarkdown .pl-ii {
+  color: #f6f8fa;
+  background-color: #82071e;
+}
+
+.reactMarkdown .pl-c2 {
+  color: #f6f8fa;
+  background-color: #cf222e;
+}
+
+.reactMarkdown .pl-sr .pl-cce {
+  font-weight: bold;
+  color: #116329;
+}
+
+.reactMarkdown .pl-ml {
+  color: #3b2300;
+}
+
+.reactMarkdown .pl-mh,
+.reactMarkdown .pl-mh .pl-en,
+.reactMarkdown .pl-ms {
+  font-weight: bold;
+  color: #0550ae;
+}
+
+.reactMarkdown .pl-mi {
+  font-style: italic;
+  color: #24292f;
+}
+
+.reactMarkdown .pl-mb {
+  font-weight: bold;
+  color: #24292f;
+}
+
+.reactMarkdown .pl-md {
+  color: #82071e;
+  background-color: #ffebe9;
+}
+
+.reactMarkdown .pl-mi1 {
+  color: #116329;
+  background-color: #dafbe1;
+}
+
+.reactMarkdown .pl-mc {
+  color: #953800;
+  background-color: #ffd8b5;
+}
+
+.reactMarkdown .pl-mi2 {
+  color: #eaeef2;
+  background-color: #0550ae;
+}
+
+.reactMarkdown .pl-mdr {
+  font-weight: bold;
+  color: #8250df;
+}
+
+.reactMarkdown .pl-ba {
+  color: #57606a;
+}
+
+.reactMarkdown .pl-sg {
+  color: #8c959f;
+}
+
+.reactMarkdown .pl-corl {
+  text-decoration: underline;
+  color: #0a3069;
+}
+
+.reactMarkdown g-emoji {
+  display: inline-block;
+  min-width: 1ch;
+  font-family: "Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 1em;
+  font-style: normal !important;
+  font-weight: 400;
+  line-height: 1;
+  vertical-align: -0.075em;
+}
+
+.reactMarkdown g-emoji img {
+  width: 1em;
+  height: 1em;
+}
+
+.reactMarkdown .task-list-item {
+  list-style-type: none;
+}
+
+.reactMarkdown .task-list-item label {
+  font-weight: 400;
+}
+
+.reactMarkdown .task-list-item.enabled label {
+  cursor: pointer;
+}
+
+.reactMarkdown .task-list-item+.task-list-item {
+  margin-top: 4px;
+}
+
+.reactMarkdown .task-list-item .handle {
+  display: none;
+}
+
+.reactMarkdown .task-list-item-checkbox {
+  margin: 0 .2em .25em -1.4em;
+  vertical-align: middle;
+}
+
+.reactMarkdown .contains-task-list:dir(rtl) .task-list-item-checkbox {
+  margin: 0 -1.6em .25em .2em;
+}
+
+.reactMarkdown .contains-task-list {
+  position: relative;
+}
+
+.reactMarkdown .contains-task-list:hover .task-list-item-convert-container,
+.reactMarkdown .contains-task-list:focus-within .task-list-item-convert-container {
+  display: block;
+  width: auto;
+  height: 24px;
+  overflow: visible;
+  clip: auto;
+}
+
+.reactMarkdown ::-webkit-calendar-picker-indicator {
+  filter: invert(50%);
+}

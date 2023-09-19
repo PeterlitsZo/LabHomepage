@@ -1,10 +1,6 @@
-import { useContext, useEffect, useState } from "react";
-import { PlusCircle } from 'lucide-react';
-
-import { AuthContext } from "../../contexts/auth";
-import { Person as PersonType, useGetPerson, useListPerson } from "../../requests/people"
-import Link from "next/link";
-import { Router, useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useGetPerson } from "../../requests/people"
+import MarkdownCard from "../MarkdownCard";
 
 interface PersonProps {
   id: string;
@@ -13,25 +9,21 @@ interface PersonProps {
 export const Person = (props: PersonProps) => {
   const getPersonQuery = useGetPerson(props.id);
 
+  const [name, setName] = useState("");
+  const [content, setContent] = useState("");
+
+  useEffect(() => {
+    if (getPersonQuery.isSuccess) {
+      const person = getPersonQuery.data.data;
+      setName(person.name);
+      setContent(person.content);
+    }
+  }, [getPersonQuery.isSuccess]);
+
   return (
-    <main className="max-w-3xl m-auto py-24">
-      <div className="border border-slate-300 p-8 rounded">
-        {getPersonQuery.isSuccess && (function() {
-          const person = getPersonQuery.data.data;
-          return (
-            <>
-              <h1 className="text-3xl">
-                {person.name}
-              </h1>
-              {person.content !== "" && (
-                <div className="mt-4 text-lg">
-                  {person.content}
-                </div>
-              )}
-            </>
-          )
-        })()}
-      </div>
-    </main>
+    <MarkdownCard
+      title={name}
+      content={content}
+    />
   )
 }
