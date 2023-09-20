@@ -1,9 +1,10 @@
 # Lab Homepage
 
-## Build
+## Build and run
 
 ```shell
 $ docker compose build --build-arg GOPROXY=<proxy-url>
+$ docker compose up
 ```
 
 ## Testing for devlopment

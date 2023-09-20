@@ -2,3 +2,7 @@
     reverse_proxy /api/* backend:8080
     reverse_proxy /* frontend:3000
 }
+
+:8001 {
+    reverse_proxy waste_land_web:3514
+}

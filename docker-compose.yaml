@@ -27,6 +27,11 @@ services:
       - "DB_HOST=mysql:3306"
       - "DB_NAME=homePage"
     command: "/usr/local/bin/backend"
+  waste_land_web:
+    restart: always
+    image: peterlitszo/waste_land_web:0.1.0
+    volumes:
+      - ./waste_land_web/data/:/app/.waste_web_data/
   frontend:
     build: ./frontend
   caddy:
@@ -36,3 +41,4 @@ services:
       - ./caddy/data:/data
     ports:
       - 80:80
+      - 8001:8001
