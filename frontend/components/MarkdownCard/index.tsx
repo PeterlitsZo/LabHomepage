@@ -1,10 +1,11 @@
 import { useContext } from 'react';
 import ReactMarkdown from 'react-markdown';
 
-import { AuthContext } from '../../contexts/auth';
 import Button from '../Button';
 
 import style from './markdownCard.module.css';
+import { useAuthStore } from '../../states/auth';
+import useStore from '../../hooks/useStore';
 
 interface MarkdownCardProps {
   title: string;
@@ -12,7 +13,7 @@ interface MarkdownCardProps {
 }
 
 const MarkdownCard = (props: MarkdownCardProps) => {
-  const auth = useContext(AuthContext);
+  const isLoggedIn = useStore(useAuthStore, state => state.isLoggedIn);
 
   return (
     <main className="max-w-3xl m-auto py-24">
@@ -20,7 +21,7 @@ const MarkdownCard = (props: MarkdownCardProps) => {
         <h1 className="text-4xl font-bold p-8">
           {props.title}
         </h1>
-        {auth.isLoggedIn === true && ( // Show tooltip if logged in
+        {isLoggedIn === true && ( // Show tooltip if logged in
           <div className="border-t border-slate-300 px-8 py-4">
             <Button>Update</Button>
           </div>

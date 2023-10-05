@@ -1,5 +1,0 @@
-.navWrapper {
-  @apply flex-auto shrink-0;
-  @apply max-w-7xl h-7;
-  @apply flex items-center content-center;
-}

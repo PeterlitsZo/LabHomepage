@@ -1,7 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { useContext } from 'react';
-import { AuthContext } from '../contexts/auth';
+import { useDeleteWithToken, useGetWithToken, usePostWithToken } from './utils';
 
 export interface Paper {
   id: string;
@@ -14,24 +12,22 @@ interface ListPaperResponse {
 }
 
 export const useListPaper = () => {
+  const fn = useGetWithToken<ListPaperResponse>('/api/v1/papers');
+
   const query = useQuery({
     queryKey: ['papers'],
-    queryFn: () => {
-      const path = process.env.NEXT_PUBLIC_BACKEND_URL_PREFIX + '/api/v1/papers';
-      return axios.get<ListPaperResponse>(path);
-    },
+    queryFn: () => fn(''),
   })
 
   return query;
 }
 
 export const useGetPaper = (id: string) => {
+  const fn = useGetWithToken<Paper>('/api/v1/papers/');
+
   const query = useQuery({
     queryKey: ['papers', id],
-    queryFn: () => {
-      const path = process.env.NEXT_PUBLIC_BACKEND_URL_PREFIX + '/api/v1/papers/' + id;
-      return axios.get<Paper>(path);
-    },
+    queryFn: () => fn(id),
   })
 
   return query;
@@ -43,35 +39,22 @@ export const useCreatePaper = () => {
     content: string;
   };
 
-  const auth = useContext(AuthContext);
+  const fn = usePostWithToken('/api/v1/papers');
 
   const mutation = useMutation({
-    mutationFn: (req: CreatePaperRequest) => {
-      const path = process.env.NEXT_PUBLIC_BACKEND_URL_PREFIX + '/api/v1/papers';
-      return axios.post(path, req, {
-        headers: {
-          Authorization: 'Bearer ' + auth.token,
-        }
-      });
-    },
+    mutationFn: (req: CreatePaperRequest) => fn('', req),
   })
 
   return mutation;
 }
 
 export const useDeletePaper = () => {
-  const auth = useContext(AuthContext);
   const listPaperQuery = useListPaper();
 
+  const fn = useDeleteWithToken('/api/v1/papers/');
+
   const mutation = useMutation({
-    mutationFn: (id: string) => {
-      const path = process.env.NEXT_PUBLIC_BACKEND_URL_PREFIX + '/api/v1/papers/' + id;
-      return axios.delete(path, {
-        headers: {
-          Authorization: 'Bearer ' + auth.token,
-        }
-      });
-    },
+    mutationFn: (id: string) => fn(id),
     onSuccess: () => {
       listPaperQuery.refetch();
     }

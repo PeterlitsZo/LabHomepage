@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { ReactNode } from 'react';
+import classNames from 'classnames';
 
 import { LogInButton } from './login';
 
@@ -9,7 +10,13 @@ import styles from './nav.module.css';
 export const Nav = () => {
   return (
     <nav className="relative z-10 flex border-b border-slate-300 justify-center bg-white px-4 lg:px-8 py-4">
-      <div className={styles.navWrapper}>
+      <div
+        className={classNames(
+          "flex-auto shrink-0",
+          "max-w-7xl h-7",
+          "flex items-center content-center",
+        )}
+      >
         <Link href="/" className="font-bold text-xl tracking-wide leading-none py-2 hover:text-slate-500">
           Lab Homepage
         </Link>

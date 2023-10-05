@@ -1,14 +1,16 @@
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../contexts/auth";
+
 import { useClickOutside } from "../../hooks/useClickOutside";
 import { useLogin } from "../../requests/login";
 import Button from "../Button";
 import Input from "../Input";
+import { useAuthStore } from "../../states/auth";
+import useStore from "../../hooks/useStore";
 
 export const LogInButton = () => {
   const [isShowingLogInBox, SetIsShowingLogInBox] = useState(false);
 
-  const auth = useContext(AuthContext);
+  const isLoggedIn = useStore(useAuthStore, state => state.isLoggedIn);
 
   const Admin = (
     <div className="rounded p-2 bg-sky-500 leading-none text-white">
@@ -18,7 +20,7 @@ export const LogInButton = () => {
 
   return (
     <>
-      { auth.isLoggedIn
+      { isLoggedIn
         ? Admin
         : (
           <div className="relative">
@@ -54,14 +56,15 @@ const LogInBox = (props: LogInBoxProps) => {
     props.setIsShowingLogInBox(false);
   }, !props.isShowingLogInBox);
 
-  const login = useLogin();
-  const auth = useContext(AuthContext);
+  const { isSuccess: loginSuccess, data: loginData, mutate: loginMutate } = useLogin();
+  const login = useStore(useAuthStore, state => state.login);
+
   useEffect(() => {
-    if (login.isSuccess) {
-      const token = login.data.data.token;
-      auth.login(token);
+    if (loginSuccess && login) {
+      const token = loginData.data.token;
+      login(token);
     }
-  }, [login, auth]);
+  }, [loginSuccess, login]);
   
 
   return (
@@ -78,7 +81,7 @@ const LogInBox = (props: LogInBoxProps) => {
       <div className="flex flex-row-reverse mt-4">
         <Button
           onClick={() => {
-            login.mutate({
+            loginMutate({
               username: 'admin',
               password: password,
             });

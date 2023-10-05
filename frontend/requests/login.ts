@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
+// Send a HTTP request to login.
 export const useLogin = () => {
   type LoginRequest = {
     username: string;
