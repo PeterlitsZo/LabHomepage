@@ -3,13 +3,11 @@ import { useRouter } from 'next/router';
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 
-import { LogInButton } from './login';
-
-import styles from './nav.module.css';
+import { AuthButton } from './AuthButton';
 
 export const Nav = () => {
   return (
-    <nav className="relative z-10 flex border-b border-slate-300 justify-center bg-white px-4 lg:px-8 py-4">
+    <nav className="relative flex border-b border-slate-300 justify-center bg-white px-4 lg:px-8 py-4">
       <div
         className={classNames(
           "flex-auto shrink-0",
@@ -25,7 +23,7 @@ export const Nav = () => {
         <NavLink href="/people">People</NavLink>
         <NavLink href="/resources">Resources</NavLink>
         <span className="flex-1" />
-        <LogInButton />
+        <AuthButton />
       </div>
     </nav>
   )

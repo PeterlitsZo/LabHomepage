@@ -1,47 +1,41 @@
 import { useState, useEffect, useContext } from "react";
 
-import { useClickOutside } from "../../hooks/useClickOutside";
-import { useLogin } from "../../requests/login";
-import Button from "../Button";
-import Input from "../Input";
-import { useAuthStore } from "../../states/auth";
-import useStore from "../../hooks/useStore";
+import { useClickOutside } from "../../../hooks/useClickOutside";
+import { useLogin } from "../../../requests/login";
+import Button from "../../Button";
+import Input from "../../Input";
+import { useAuthStore } from "../../../states/auth";
+import useStore from "../../../hooks/useStore";
+import { AdminAvatar } from "./AdminAvatar";
 
-export const LogInButton = () => {
+export function AuthButton() {
   const [isShowingLogInBox, SetIsShowingLogInBox] = useState(false);
 
   const isLoggedIn = useStore(useAuthStore, state => state.isLoggedIn);
 
-  const Admin = (
-    <div className="rounded p-2 bg-sky-500 leading-none text-white">
-      Admin
-    </div>
-  )
-
-  return (
-    <>
-      { isLoggedIn
-        ? Admin
-        : (
-          <div className="relative">
-            <Button
-              onClick={() => SetIsShowingLogInBox(true)}
-              disabled={isShowingLogInBox}
-              className="-my-1"
-            >
-              Log in
-            </Button>
-            {isShowingLogInBox && (
-              <LogInBox
-                isShowingLogInBox={isShowingLogInBox}
-                setIsShowingLogInBox={SetIsShowingLogInBox}
-              />
-            )}
-          </div>
-        )
-      }
-    </>
-  );
+  if (isLoggedIn) {
+    return (
+      <AdminAvatar />
+    )
+  } else {
+    return (
+      <div className="relative">
+        <Button
+          onClick={() => SetIsShowingLogInBox(true)}
+          disabled={isShowingLogInBox}
+          className="-my-1"
+        >
+          Log in
+        </Button>
+        {isShowingLogInBox && (
+          <LogInBox
+            isShowingLogInBox={isShowingLogInBox}
+            setIsShowingLogInBox={SetIsShowingLogInBox}
+          />
+        )}
+      </div>
+    )
+  }
 }
 
 interface LogInBoxProps {
@@ -49,7 +43,7 @@ interface LogInBoxProps {
   setIsShowingLogInBox: (isShowingLogIn: boolean) => void;
 }
 
-const LogInBox = (props: LogInBoxProps) => {
+function LogInBox(props: LogInBoxProps) {
   const [password, setPassword] = useState('');
 
   const ref = useClickOutside(() => {
@@ -57,11 +51,16 @@ const LogInBox = (props: LogInBoxProps) => {
   }, !props.isShowingLogInBox);
 
   const { isSuccess: loginSuccess, data: loginData, mutate: loginMutate } = useLogin();
-  const login = useStore(useAuthStore, state => state.login);
+  const login = useAuthStore(state => state.login);
+
+  useEffect(() => {
+    console.log('login: ', login);
+  }, [login]);
 
   useEffect(() => {
     if (loginSuccess && login) {
       const token = loginData.data.token;
+      console.log('call login: ', login);
       login(token);
     }
   }, [loginSuccess, login]);
@@ -70,7 +69,7 @@ const LogInBox = (props: LogInBoxProps) => {
   return (
     <div
       ref={ref as any}
-      className="absolute top-9 right-0 bg-white p-4 w-96 border border-slate-300 rounded"
+      className="absolute top-9 right-0 z-10 bg-white p-4 w-96 border border-slate-300 rounded"
     >
       <div className="font-bold text-xl mb-4">Welcome back</div>
       <Input
